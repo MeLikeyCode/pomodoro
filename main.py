@@ -1,5 +1,5 @@
-from pomodoro import Pomodoro
+from pomodoroapp import PomodoroApp
 
 if __name__ == "__main__":
-    app = Pomodoro()
+    app = PomodoroApp()
     app.start()
