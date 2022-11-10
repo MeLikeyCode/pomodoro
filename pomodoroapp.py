@@ -2,8 +2,8 @@ import customtkinter as ctk
 import pystray
 from PIL import Image
 
-from settings import Settings
-from pomodoro import Pomodoro
+from settingswidget import SettingsWidget
+from pomodorowidget import PomodoroWidget
 
 class PomodoroApp:
     """Represents the pomodoro application as a whole."""
@@ -15,7 +15,7 @@ class PomodoroApp:
         self.root.protocol("WM_DELETE_WINDOW", self._trayize_window)
 
     def start(self):
-        p = Pomodoro(self.root)
+        p = PomodoroWidget(self.root)
         p.pack(fill=ctk.BOTH,expand=True)
 
         self.root.mainloop()

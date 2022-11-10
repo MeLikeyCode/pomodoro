@@ -1,6 +1,6 @@
 import customtkinter as ctk
 
-class Settings(ctk.CTkFrame):
+class SettingsWidget(ctk.CTkFrame):
     def __init__(self,master):
         super().__init__(master)
 
