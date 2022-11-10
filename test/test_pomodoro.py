@@ -30,18 +30,31 @@ class TestPomodoro(unittest.TestCase):
         self.assertTrue(p.time_remaining < 5, "time remaining should still be less than 5")
         time.sleep(4)
 
-        for i in range(3):
-            # 2nd work (then 3rd, then 4th)
-            self.assertEqual(p.state, WORK)
-            time.sleep(20)
-
-            if i < 2:
-                self.assertEqual(p.state, BREAK)
-                time.sleep(5)
-            else:
-                self.assertEqual(p.state, LONG_BREAK, "state should be LONG_BREAK after 4th work")
-
-        time.sleep(10)
-        self.assertEqual(p.state, WORK, "state should be WORK after long break time is up")
-        self.assertEqual(p.num_rounds_done, 1)
+        # 2nd work
         self.assertEqual(p.state, WORK)
+
+        p.stop()
+
+    def test_long_break(self):
+        p = Pomodoro()
+        p.work_length = 20
+        p.break_length = 5
+        p.long_break_length = 10
+
+        p.start()
+
+        time.sleep(20)
+        time.sleep(5)
+
+        time.sleep(20)
+        time.sleep(5)
+
+        time.sleep(20)
+        time.sleep(5)
+
+        time.sleep(20)
+        self.assertEqual(p.state, LONG_BREAK)
+        self.assertEqual(p.num_works_done,0)
+        self.assertEqual(p.num_rounds_done,1)
+
+        p.stop()
