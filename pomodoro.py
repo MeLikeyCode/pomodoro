@@ -119,7 +119,7 @@ class Pomodoro:
     def stop(self):
         with self._mutex:
             self._change_state(OFF)
-        self._worker.join()
+        # self._worker.join() # thread will exit on its own; no need to join unless we want the calling thread to wait for it to finish
 
     def _worker_thread_method(self):
         while True:
@@ -164,6 +164,8 @@ class Pomodoro:
             self._change_state(WORK)
 
     def _change_state(self, new_state):
+        """Sets the attributes to appropriate values for the new state. Handles coming from any state to the new state."""
+        
         self._start_time = time.time()
         self._state = new_state
         if new_state == WORK:
@@ -193,4 +195,3 @@ class Pomodoro:
             "num works done": self.num_works_done,
             "num rounds done": self.num_rounds_done,
         }.__repr__()
-        
