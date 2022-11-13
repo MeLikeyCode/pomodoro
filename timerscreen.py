@@ -81,7 +81,7 @@ class TimerScreen(ctk.CTkFrame):
             rounds_done = self._pomodoro_timer.num_rounds_done
             self._rounds_done_value_label.configure(text=rounds_done)
 
-        self.after_idle(self.on_idle)  # call again on next idle
+        self.after(1000,self.on_idle)  # call every second
 
     @property
     def work_length(self):
