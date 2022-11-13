@@ -39,3 +39,19 @@ class SettingsWidget(ctk.CTkFrame):
         e2.grid(row=1, column=1, sticky=ctk.EW)
         e3.grid(row=2, column=1, sticky=ctk.EW)
         e4.grid(row=3, column=1, sticky=ctk.EW)
+
+    @property
+    def work_length(self):
+        return self._work_length_var.get()
+
+    @property
+    def break_length(self):
+        return self._break_length_var.get()
+
+    @property
+    def long_break_length(self):
+        return self._long_break_length_var.get()
+
+    @property
+    def num_works_before_long_break(self):
+        return self._num_works_before_long_break_var.get()

@@ -43,6 +43,14 @@ class PomodoroApp:
 
         # show timer screen
         self._timer_screen.pack(fill=ctk.BOTH, expand=True)
+
+        self._timer_screen.work_length = self._start_screen.work_length
+        self._timer_screen.break_length = self._start_screen.break_length
+        self._timer_screen.long_break_length = self._start_screen.long_break_length
+        self._timer_screen.num_works_before_long_break = (
+            self._start_screen.num_works_before_long_break
+        )
+
         self._timer_screen.start_timer()
 
     def on_stop_timer(self):

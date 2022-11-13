@@ -78,3 +78,35 @@ class TimerScreen(ctk.CTkFrame):
             self._rounds_done_value_label.configure(text=rounds_done)
 
         self.after_idle(self.on_idle)  # call again on next idle
+
+    @property
+    def work_length(self):
+        return self._pomodoro_timer.work_length * 60
+
+    @work_length.setter
+    def work_length(self, value):
+        self._pomodoro_timer.work_length = value * 60
+
+    @property
+    def break_length(self):
+        return self._pomodoro_timer.break_length * 60
+
+    @break_length.setter
+    def break_length(self, value):
+        self._pomodoro_timer.break_length = value * 60
+
+    @property
+    def long_break_length(self):
+        return self._pomodoro_timer.long_break_length * 60
+
+    @long_break_length.setter
+    def long_break_length(self, value):
+        self._pomodoro_timer.long_break_length = value * 60
+
+    @property
+    def num_works_before_long_break(self):
+        return self._pomodoro_timer.num_works_before_long_break
+
+    @num_works_before_long_break.setter
+    def num_works_before_long_break(self, value):
+        self._pomodoro_timer.num_works_before_long_break = value

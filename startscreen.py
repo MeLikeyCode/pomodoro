@@ -26,11 +26,27 @@ class StartScreen(ctk.CTkFrame):
         title_label.pack(padx=10, pady=10, fill=ctk.X)
         start_button.pack(padx=10, pady=10, fill=ctk.X)
 
-        settings = SettingsWidget(self)
-        settings.pack(fill=ctk.BOTH, expand=True, padx=10, pady=10)
+        self._settings = SettingsWidget(self)
+        self._settings.pack(fill=ctk.BOTH, expand=True, padx=10, pady=10)
 
     def _on_start(self):
         self.on_start()
 
     def on_start(self):
         pass  # expecting client to assign this, gives client a chance to do something when the start button is pressed
+
+    @property
+    def work_length(self):
+        return self._settings.work_length
+
+    @property
+    def break_length(self):
+        return self._settings.break_length
+
+    @property
+    def long_break_length(self):
+        return self._settings.long_break_length
+
+    @property
+    def num_works_before_long_break(self):
+        return self._settings.num_works_before_long_break
