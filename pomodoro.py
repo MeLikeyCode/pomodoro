@@ -1,6 +1,8 @@
 import threading
 import time
+import json
 from plyer import notification
+from datetime import datetime
 
 OFF = "off"
 WORK = "work"
@@ -147,6 +149,7 @@ class Pomodoro:
         self._update_time_remaining(self._work_length)
         if self._time_remaining <= 0:
             self._num_works_done += 1
+            self._log(WORK, self._work_length)
             if self._num_works_done >= self._num_works_before_long_break:
                 self._num_rounds_done += 1
                 self._num_works_done = 0
@@ -157,18 +160,23 @@ class Pomodoro:
     def _handle_break_state(self):
         self._update_time_remaining(self._break_length)
         if self._time_remaining <= 0:
+            self._log(BREAK, self._break_length)
             self._change_state(WORK)
 
     def _handle_long_break_state(self):
         self._update_time_remaining(self._long_break_length)
         if self._time_remaining <= 0:
+            self._log(LONG_BREAK, self._long_break_length)
             self._change_state(WORK)
 
     def _change_state(self, new_state):
         """Change the state.
-        
-        Sets the attributes to appropriate values for the new state. Handles coming from any state to the new state. Also shows a notification."""
-        
+
+        -handles coming from any state to the new state
+        -sets the attributes to appropriate values for the new state.
+        -shows notifications
+        -logs"""
+
         self._start_time = time.time()
         self._state = new_state
         if new_state == WORK:
@@ -186,20 +194,52 @@ class Pomodoro:
             self._start_time = None
 
         if new_state == OFF:
-            notification.notify(title="pomodoro off", message="pomodoro timer turned off, enjoy your free time :)",timeout=5,app_icon="tomato.ico")
+            notification.notify(
+                title="pomodoro off",
+                message="pomodoro timer turned off, enjoy your free time :)",
+                timeout=5,
+                app_icon="tomato.ico",
+            )
         elif new_state == WORK:
-            notification.notify(title="work", message="get to work and stay focused",timeout=5,app_icon="tomato.ico")
+            notification.notify(
+                title="work",
+                message="get to work and stay focused",
+                timeout=5,
+                app_icon="tomato.ico",
+            )
         elif new_state == BREAK:
-            notification.notify(title="break", message="take a short break, relax/meditate",timeout=5,app_icon="tomato.ico")
+            notification.notify(
+                title="break",
+                message="take a short break, relax/meditate",
+                timeout=5,
+                app_icon="tomato.ico",
+            )
         elif new_state == LONG_BREAK:
-            notification.notify(title="long break", message="take a well deserved long break",timeout=5,app_icon="tomato.ico")
-
+            notification.notify(
+                title="long break",
+                message="take a well deserved long break",
+                timeout=5,
+                app_icon="tomato.ico",
+            )
 
     def _update_time_remaining(self, time_required):
         current_time = time.time()
         time_elapsed = current_time - self._start_time
         time_remaining = time_required - time_elapsed
         self._time_remaining = int(time_remaining)
+
+    def _log(self, state, length):
+        """Log that the user user has completed some work/break."""
+
+        with open("pomodoro_log.txt", "a") as f:
+            d = {
+                "state": state,
+                "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+                "length": length,
+            }
+            log_line = json.dumps(d)
+            f.write(log_line)
+            f.write("\n")
 
     def __repr__(self) -> str:
         return {
