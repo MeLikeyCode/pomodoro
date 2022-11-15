@@ -1,5 +1,6 @@
 import threading
 import time
+from plyer import notification
 
 OFF = "off"
 WORK = "work"
@@ -164,7 +165,9 @@ class Pomodoro:
             self._change_state(WORK)
 
     def _change_state(self, new_state):
-        """Sets the attributes to appropriate values for the new state. Handles coming from any state to the new state."""
+        """Change the state.
+        
+        Sets the attributes to appropriate values for the new state. Handles coming from any state to the new state. Also shows a notification."""
         
         self._start_time = time.time()
         self._state = new_state
@@ -181,6 +184,16 @@ class Pomodoro:
             self._start_time = None
             self._started = False
             self._start_time = None
+
+        if new_state == OFF:
+            notification.notify(title="pomodoro off", message="pomodoro timer turned off, enjoy your free time :)",timeout=5,app_icon="tomato.ico")
+        elif new_state == WORK:
+            notification.notify(title="work", message="get to work and stay focused",timeout=5,app_icon="tomato.ico")
+        elif new_state == BREAK:
+            notification.notify(title="break", message="take a short break, relax/meditate",timeout=5,app_icon="tomato.ico")
+        elif new_state == LONG_BREAK:
+            notification.notify(title="long break", message="take a well deserved long break",timeout=5,app_icon="tomato.ico")
+
 
     def _update_time_remaining(self, time_required):
         current_time = time.time()
