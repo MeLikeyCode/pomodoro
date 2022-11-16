@@ -14,7 +14,7 @@ class TimerScreen(ctk.CTkFrame):
 
         self._pomodoro_timer = Pomodoro()
 
-        self.after_idle(self._on_periodically)
+        self._on_periodically()
 
     def _initialize_gui(self):
         stop_image = ImageTk.PhotoImage(Image.open("stop.png").resize((100, 100)))
@@ -24,8 +24,8 @@ class TimerScreen(ctk.CTkFrame):
         stop_button = ctk.CTkButton(
             self, text="stop", image=stop_image, compound=ctk.TOP, command=self._on_stop, fg_color="#D2686E", hover_color="#680C07"
         )
-        self._activity_label = ctk.CTkLabel(self, text_font=("Helvetica", 25))
-        self._time_remaining_label = ctk.CTkLabel(self, text_font=("Helvetica", 40))
+        self._activity_label = ctk.CTkLabel(self, text_font=("Helvetica", 25),text="work")
+        self._time_remaining_label = ctk.CTkLabel(self, text_font=("Helvetica", 40), text="00:00")
 
 
         title_label.pack(padx=10, pady=10, fill=ctk.X)
@@ -37,11 +37,11 @@ class TimerScreen(ctk.CTkFrame):
         rounds_done_frame = ctk.CTkFrame(self)
 
         works_done = ctk.CTkLabel(works_done_frame, text="works done: ", anchor=ctk.E)
-        self._works_done_value_label = ctk.CTkLabel(works_done_frame, anchor=ctk.W)
+        self._works_done_value_label = ctk.CTkLabel(works_done_frame, anchor=ctk.W, text="0")
         rounds_done = ctk.CTkLabel(
             rounds_done_frame, text="rounds done: ", anchor=ctk.E
         )
-        self._rounds_done_value_label = ctk.CTkLabel(rounds_done_frame, anchor=ctk.W)
+        self._rounds_done_value_label = ctk.CTkLabel(rounds_done_frame, anchor=ctk.W, text="0")
 
         works_done.pack(side=ctk.LEFT)
         self._works_done_value_label.pack(side=ctk.LEFT)
