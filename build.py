@@ -4,7 +4,7 @@ import argparse
 import glob
 
 
-description = """Build an executable."""
+description = """Package as standalone executable and dependent files (dlls, images, config files, etc)."""
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=description)
@@ -36,9 +36,10 @@ if __name__ == "__main__":
         check=True,
     )
 
-    # copy images
+    # copy images/config files
     for v in glob.glob("*.png"):
         shutil.copy(v, "dist/pomodoro")
     for v in glob.glob("*.ico"):
         shutil.copy(v, "dist/pomodoro")
+    shutil.copy("settings.json", "dist/pomodoro")
         

@@ -1,6 +1,6 @@
 import customtkinter as ctk
 import tkinter as tk
-import tkinter.ttk as ttk
+import json
 
 
 class SettingsWidget(ctk.CTkFrame):
@@ -11,10 +11,20 @@ class SettingsWidget(ctk.CTkFrame):
         self._initialize_gui()
 
     def _initialize_gui(self):
-        self._work_length_var = tk.IntVar(value=25)
-        self._break_length_var = tk.IntVar(value=5)
-        self._long_break_length_var = tk.IntVar(value=20)
-        self._num_works_before_long_break_var = tk.IntVar(value=4)
+        # load initial param values from settings.json
+        with open("settings.json", "r") as f:
+            settings = json.load(f)
+
+            self._work_length_var = tk.IntVar(value=settings["work_length"])
+            self._break_length_var = tk.IntVar(value=settings["break_length"])
+            self._long_break_length_var = tk.IntVar(value=settings["long_break_length"])
+            self._num_works_before_long_break_var = tk.IntVar(value=settings["num_works_before_long_break"])
+
+        # listen for changes to params
+        self._work_length_var.trace_id = self._work_length_var.trace("w", self._on_value_changed)
+        self._break_length_var.trace_id = self._break_length_var.trace("w", self._on_value_changed)
+        self._long_break_length_var.trace_id = self._long_break_length_var.trace("w", self._on_value_changed)
+        self._num_works_before_long_break_var.trace_id = self._num_works_before_long_break_var.trace("w", self._on_value_changed)
 
         self.grid_columnconfigure(1, weight=1)
 
@@ -39,6 +49,19 @@ class SettingsWidget(ctk.CTkFrame):
         e2.grid(row=1, column=1, sticky=ctk.EW)
         e3.grid(row=2, column=1, sticky=ctk.EW)
         e4.grid(row=3, column=1, sticky=ctk.EW)
+
+    def _on_value_changed(self, *args):
+        """Executed when any of the timer parameters (work length, break length, etc) are changed. Will
+        write the new values to the settings file."""
+
+        with open("settings.json", "w") as f:
+            settings_dict = {
+                "work_length": self.work_length,
+                "break_length": self.break_length,
+                "long_break_length": self.long_break_length,
+                "num_works_before_long_break": self.num_works_before_long_break,
+            }
+            f.write(json.dumps(settings_dict))
 
     @property
     def work_length(self):
