@@ -1,1 +1,13 @@
-__pycache__
+# gitignore syntax
+# - if name starts with slash, its relative to place where the .gitignore is (usually root of project)
+# - if the name ends with slash, its a directory, otherwise it could be both a file or a directory
+
+# ignore all directories called __pycache__ everywhere
+__pycache__/
+
+# ignore the build and dist directories generated at project root
+/build/
+/dist/
+
+# ignore pyinstaller generated spec file
+/pomodoro.spec
