@@ -64,6 +64,7 @@ class PomodoroApp:
     def _on_tray_quit(self, icon, item):
         """Executed when the "quit" option of the tray is selected."""
         icon.stop()
+        self._timer_screen.stop_timer()
         self.root.destroy()
 
     def _on_tray_show(self, icon, item):

@@ -58,6 +58,9 @@ class TimerScreen(ctk.CTkFrame):
     def start_timer(self):
         self._pomodoro_timer.start()
 
+    def stop_timer(self):
+        self._pomodoro_timer.stop()
+
     def on_stop(self):
         pass  # expecting client to assign this; gives client a chance to do something when stop button is clicked
 
