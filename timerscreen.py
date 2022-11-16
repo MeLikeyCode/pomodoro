@@ -14,7 +14,7 @@ class TimerScreen(ctk.CTkFrame):
 
         self._pomodoro_timer = Pomodoro()
 
-        self.after_idle(self.on_idle)
+        self.after_idle(self._on_periodically)
 
     def _initialize_gui(self):
         stop_image = ImageTk.PhotoImage(Image.open("stop.png").resize((100, 100)))
@@ -61,7 +61,7 @@ class TimerScreen(ctk.CTkFrame):
     def on_stop(self):
         pass  # expecting client to assign this; gives client a chance to do something when stop button is clicked
 
-    def on_idle(self):
+    def _on_periodically(self):
         # update GUI to reflect the underlying timer
         if self._pomodoro_timer.started:
             # update time remaining
@@ -81,7 +81,7 @@ class TimerScreen(ctk.CTkFrame):
             rounds_done = self._pomodoro_timer.num_rounds_done
             self._rounds_done_value_label.configure(text=rounds_done)
 
-        self.after(1000,self.on_idle)  # call every second
+        self.after(1000,self._on_periodically)  # call every second
 
     @property
     def work_length(self):

@@ -228,14 +228,14 @@ class Pomodoro:
         time_remaining = time_required - time_elapsed
         self._time_remaining = int(time_remaining)
 
-    def _log(self, state, length):
+    def _log(self, state, length_seconds):
         """Log that the user user has completed some work/break."""
 
         with open("pomodoro_log.txt", "a") as f:
             d = {
                 "state": state,
                 "time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                "length": length,
+                "length": int(length_seconds / 60),
             }
             log_line = json.dumps(d)
             f.write(log_line)
