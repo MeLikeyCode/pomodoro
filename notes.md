@@ -1,6 +1,6 @@
 # Dependencies
 - **python 3**
-- **customtkinter** (provides a better looking GUI than vanilla tkinter)
+- **customtkinter** (provides a more modern looking GUI than vanilla tkinter)
 - **PIL** (used for image objects for tkinter)
 - **pystray** (allows placing interactable icons in the system tray)
 - **pyler** (allows poping up notifications)
