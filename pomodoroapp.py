@@ -13,6 +13,10 @@ class PomodoroApp:
     Example:
         p = PomodoroApp()
         p.start()
+
+    Be careful, some of the methods of this class are called by worker threads, so they should not access things
+    directly, should just add events to the event queue. Methods that are called by worker threads say so
+    in their docstrings.
     """
 
     def __init__(self) -> None:
@@ -23,6 +27,13 @@ class PomodoroApp:
         self.root.geometry("720x480")
         self.root.protocol("WM_DELETE_WINDOW", self._trayize_window)
         self.root.wm_iconphoto(False, ImageTk.PhotoImage(file="tomato.png"))
+
+        self._tray: pystray.Icon = None
+        self._tray_image = Image.open("tomato.png")
+        self._set_tray((("quit", self._on_tray_quit),))
+
+        self.root.bind("<<Quit>>", lambda e: self.root.destroy())
+        self.root.bind("<<Show>>", self._on_show)
 
         # set up start screen
         self._start_screen = StartScreen(self.root)
@@ -61,24 +72,43 @@ class PomodoroApp:
         # show start screen
         self._start_screen.pack(fill=ctk.BOTH, expand=True)
 
+    def _on_show(self, e):
+        """Executed in response to the <<Show>> event."""
+        self.root.deiconify()
+        self._set_tray((("quit", self._on_tray_quit),))
+
+    def _set_tray(self, menu_items, default=None):
+        if self._tray:
+            self._tray.stop()
+
+        menu = []
+        for item in menu_items:
+            if item[0] == default:
+                menu.append(pystray.MenuItem(item[0], item[1], default=True))
+            else:
+                menu.append(pystray.MenuItem(item[0], item[1]))
+
+        self._tray = pystray.Icon("pomodoro", self._tray_image, "pomodoro", menu)
+        self._tray.run_detached()
+
     def _on_tray_quit(self, icon, item):
-        """Executed when the "quit" option of the tray is selected."""
+        """Executed when the "quit" option of the tray is selected.
+        
+        This is executed by a daemon thread (pystray run_detached thread), so we add a quit event to the event queue of tk (which is thread safe probably???)
+        """
         icon.stop()
         self._timer_screen.stop_timer()
-        self.root.destroy()
+        self.root.event_generate("<<Quit>>")
 
     def _on_tray_show(self, icon, item):
-        """Executed when the "show" option of the tray is selected."""
-        icon.stop()
-        self.root.after(0, self.root.deiconify)
+        """Executed when the "show" option of the tray is selected.
+        
+        This is executed by a daemon thread (pystray run_detached thread), so we just add an event to event queue.
+        """
+        self.root.event_generate("<<Show>>")
 
     def _trayize_window(self):
-        """Hide the window and show the tray icon."""
+        """Hide the window and add "show" option to the tray."""
         self.root.withdraw()
-        image = Image.open("tomato.png")
-        menu = (
-            pystray.MenuItem("Quit", self._on_tray_quit),
-            pystray.MenuItem("Show", self._on_tray_show, default=True),
-        )
-        icon = pystray.Icon("pomodoro", image, "pomodoro", menu)
-        icon.run()
+        self._set_tray((("show", self._on_tray_show), ("quit", self._on_tray_quit)),default="show")
+

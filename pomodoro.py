@@ -120,9 +120,16 @@ class Pomodoro:
         self._worker.start()
 
     def stop(self):
+        if not self._started:
+            return
+
         with self._mutex:
             self._change_state(OFF)
-        # self._worker.join() # thread will exit on its own; no need to join unless we want the calling thread to wait for it to finish
+        # self._worker.join()   # worker thread will exit (return) on its own; 
+                                # no need to join unless we want the calling thread to wait for it to finish;
+                                # when the python process exits, it will wait for all non-daemon threads to finish,
+                                # and since this one will have already finished (returned), it will not block the 
+                                # process from exiting
 
     def _worker_thread_method(self):
         while True:
