@@ -23,7 +23,7 @@ if __name__ == "__main__":
         [
             "pyinstaller",
             "--name=pomodoro",
-            "--icon=tomato.ico",
+            "--icon=images/tomato.ico",
             "--hidden-import",
             "plyer.platforms.win.notification",
             "--noconfirm",
@@ -37,9 +37,6 @@ if __name__ == "__main__":
     )
 
     # copy images/config files
-    for v in glob.glob("*.png"):
-        shutil.copy(v, "dist/pomodoro")
-    for v in glob.glob("*.ico"):
-        shutil.copy(v, "dist/pomodoro")
+    shutil.copytree("images", "dist/pomodoro/images")
     shutil.copy("settings.json", "dist/pomodoro")
         

@@ -125,11 +125,11 @@ class Pomodoro:
 
         with self._mutex:
             self._change_state(OFF)
-        # self._worker.join()   # worker thread will exit (return) on its own; 
-                                # no need to join unless we want the calling thread to wait for it to finish;
-                                # when the python process exits, it will wait for all non-daemon threads to finish,
-                                # and since this one will have already finished (returned), it will not block the 
-                                # process from exiting
+        # self._worker.join()   # worker thread will exit (return) on its own;
+        # no need to join unless we want the calling thread to wait for it to finish;
+        # when the python process exits, it will wait for all non-daemon threads to finish,
+        # and since this one will have already finished (returned), it will not block the
+        # process from exiting
 
     def _worker_thread_method(self):
         while True:
@@ -200,33 +200,35 @@ class Pomodoro:
             self._started = False
             self._start_time = None
 
+        icon_path = "images/tomato.ico"
+
         if new_state == OFF:
             notification.notify(
                 title="pomodoro off",
                 message="pomodoro timer turned off, enjoy your free time :)",
                 timeout=5,
-                app_icon="tomato.ico",
+                app_icon=icon_path,
             )
         elif new_state == WORK:
             notification.notify(
                 title="work",
                 message="get to work and stay focused",
                 timeout=5,
-                app_icon="tomato.ico",
+                app_icon=icon_path,
             )
         elif new_state == BREAK:
             notification.notify(
                 title="break",
                 message="take a short break, relax/meditate",
                 timeout=5,
-                app_icon="tomato.ico",
+                app_icon=icon_path,
             )
         elif new_state == LONG_BREAK:
             notification.notify(
                 title="long break",
                 message="take a well deserved long break",
                 timeout=5,
-                app_icon="tomato.ico",
+                app_icon=icon_path,
             )
 
     def _update_time_remaining(self, time_required):

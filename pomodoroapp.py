@@ -26,10 +26,10 @@ class PomodoroApp:
         self.root.title("pomodoro")
         self.root.geometry("720x480")
         self.root.protocol("WM_DELETE_WINDOW", self._trayize_window)
-        self.root.wm_iconphoto(False, ImageTk.PhotoImage(file="tomato.png"))
+        self.root.wm_iconphoto(False, ImageTk.PhotoImage(file="images/tomato.png"))
 
         self._tray: pystray.Icon = None
-        self._tray_image = Image.open("tomato.png")
+        self._tray_image = Image.open("images/tomato.png")
         self._set_tray((("quit", self._on_tray_quit),))
 
         self.root.bind("<<Quit>>", lambda e: self.root.destroy())

@@ -7,11 +7,13 @@ A distraction-free pomodoro timer that helps you stay focused.
 - displays inspirational/motivational quotes during your *breaks* for positive reinforcement (does *not* display *anything* while you are working, to prevent distracting you) (TODO)
 - easy "installation", just unzip and run `pomodoro.exe`
 - runs entirely offline (comes with some music/quotes that can be used offline); the internet is full of distractions and this app will not force you to be there
-
-The philosophy of this app is to be **distraction-free** and encourage you to stay as focused as possible. 
-
-As a result, it does not need **any** windows open and is as minimal as possible in order to stay out of your way. 
-
-Even opening a browser to play some study music is an opportunity for you to become distracted, so the app provides a distraction free way to get your work/study music. The UI (though admittedly ugly) is *minimal*. It is not meant to be looked at and enjoyed, it is not meant to entertain or awe, it is meant to be out of your way (literally, it goes to the tray), and ever so often nudge you back to focusing.
+- app's design and implementation is driven by a philosophy of being minimalistic and distraction free; provides the things that you need to study/work comfortably and focused, without opening browser windows, where you have a high porbability of getting distracted
 
 Currently only works on windows, but if you are a linux/mac user and wanna use this, create an issue on the github repo and I'll make it happen.
+
+# Screenshots
+![](/images/screenshot_start.png)
+
+![](/images/screenshot_stop.png)
+
+![](/images/screenshot_tray.png)

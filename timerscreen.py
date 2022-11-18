@@ -17,7 +17,7 @@ class TimerScreen(ctk.CTkFrame):
         self._on_periodically()
 
     def _initialize_gui(self):
-        stop_image = ImageTk.PhotoImage(Image.open("stop.png").resize((100, 100)))
+        stop_image = ImageTk.PhotoImage(Image.open("images/stop.png").resize((100, 100)))
 
         title_label = ctk.CTkLabel(self, text="pomodoro", text_font=("Helvetica", 25))
 
