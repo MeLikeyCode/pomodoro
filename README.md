@@ -5,13 +5,7 @@ A distraction-free pomodoro timer that helps you stay focused.
 - plays study/work music in the background (no browser/music player winows or even an internet connection needed while you work anymore) (TODO this feature will be available in the future)
 - keeps track of time worked (and time spent taking breaks) in a *local* log file so you can see your habbits
 
-The motivation for creating this app came about because I was looking for a pomodor timer that **did not need to have a window up all the time**, one that just stayed out of your way and notified you when it was time to work, break, etc.
-
-I was not able to find such a timer, so I created my own.
-
-I also like to listen to music (study music) when I'm working, but having to open up a browser just to play some music opens a whole can of distraction-worms. So I added the ability for my app to play study music in the background, without any distracting windows up! It ships with some music (generously provided by amazingly creative/artistic people) so you can enjoy study music even when you are disconnected.
-
-Furthermore, I like to review my habbits and such, so I made the app record the amount of time you work/break, in a *local* file, no one except you will see it.
+Installation is easy, just download the installer (see releases or [click here](https://github.com/MeLikeyCode/pomodoro/releases/download/v1.0.0/install_pomodoro.exe)) and run it.
 
 Currently this app only works on windows, but if you are a linux/mac user and wanna use this, create an issue on the github repo and I'll make it happen.
 
@@ -27,6 +21,15 @@ If you are a developer, see the `docs` folder, in particular `docs/developer_not
 ![](/docs/screenshots/tray_break.png)
 
 ![](/docs/screenshots/tray_work.png)
+
+# Motivation
+The motivation for creating this app came about because I was looking for a pomodor timer that **did not need to have a window up all the time**, one that just stayed out of your way and notified you when it was time to work, break, etc.
+
+I was not able to find such a timer, so I created my own.
+
+I also like to listen to music (study music) when I'm working, but having to open up a browser just to play some music opens a whole can of distraction-worms. So I added the ability for my app to play study music in the background, without any distracting windows up! It ships with some music (generously provided by amazingly creative/artistic people) so you can enjoy study music even when you are disconnected.
+
+Furthermore, I like to review my habbits and such, so I made the app record the amount of time you work/break, in a *local* file, no one except you will see it.
 
 # Credits
 - First, thanks a **whole bunch** to all the amazong people who contributed to the open source libraries, tools, IDEs, etc that were used to create this app
