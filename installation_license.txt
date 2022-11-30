@@ -1,0 +1,13 @@
+Hello! Thanks so much for trying my pomodoro timer!
+
+The motivation for creating this app came about because I was looking for a pomodor timer that did not need to have a window up all the time, one that just stayed out of your way and notified you when it was time to work, break, etc.
+
+I was not able to find such a timer, so I created my own.
+
+I also like to listen to music (study music) when I'm working, but having to open up a browser just to play some music opens a whole can of distraction-worms. So I added the ability for my app to play study music in the background, without any distracting windows up! It ships with some music (generously provided by amazingly creative/artistic people) so you can enjoy study music even when you are disconnected.
+
+Anyways, I wanted to share this app, free of charge, to anyone who was looking for something similar, and I've developed this with good intentions, but I have to say that it is provided as-is, with no gurantees of any sorts. I'm not liable or responsible for anything that happens from you using this app.
+
+With that out of the way, thanks again for using my app and I hope it helps you just a little bit!
+
+-Abdullah

@@ -5,13 +5,14 @@
 - **pystray** (allows placing interactable icons in the system tray)
 - **pyler** (allows poping up notifications)
 
-# Building an Executable
+# Building an Installer
 Prereqs:
 - **pip** (used to find location of customtkinter)
-- **pyinstaller** (used to create the executable/dependent stuff)
+- **pyinstaller** (used to package the python interpretter, dependent .py files, .dlls, etc)
 - python environment with all the dependent packages
+- NSIS (nullsoft scriptable install system)
 
-Run `build.py`. Output will be the folder `<project root>/dist/pomodor`. Just distribute that folder to end users. They will just need to run `pomodoro.exe` located within that folder.
+Run `build.py`. Pyinstaller output (the python interpretter, dependent .py files, .dlls, etc all packaged up in a folder) will be at `<project root>/dist/pomodoro`. The actual NSIS installer (this is the installer that needs to be distributed to end users) will be at `<project root>/pomodoro_installer.exe`.
 
 # Conventions
 - the Pomodoro class (pomodoro.py) uses *seconds* for work length, break length, and long break length, where as all the gui related classes (TimerScreen, StartScreen, etc) use *minutes*

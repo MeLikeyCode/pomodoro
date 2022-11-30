@@ -1,14 +1,17 @@
 import shutil
 import subprocess
 import argparse
-import glob
+import os
 
 
-description = """Package as standalone executable and dependent files (dlls, images, config files, etc)."""
+description = """Package everything in an installer."""
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=description)
     args = parser.parse_args()
+
+    # get directory the script is in
+    script_dir = os.path.dirname(os.path.realpath(__file__))
 
     # find out location of customtkinter
     pip = subprocess.run(
@@ -18,7 +21,9 @@ if __name__ == "__main__":
         if v.startswith("Location:"):
             ctk_dir = v[10:]
 
-    # run pyinstaller
+    os.chdir(script_dir)
+
+    # run pyinstaller, will create folder dist/pomodoro
     subprocess.run(
         [
             "pyinstaller",
@@ -39,4 +44,8 @@ if __name__ == "__main__":
     # copy images/config files
     shutil.copytree("images", "dist/pomodoro/images")
     shutil.copy("settings.json", "dist/pomodoro")
+
+    # create installer
+    subprocess.run('makensis build_installer.nsi', shell=True, check=True)
+
         
