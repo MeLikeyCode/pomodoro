@@ -5,7 +5,7 @@ A distraction-free pomodoro timer that helps you stay focused.
 - plays study/work music in the background (no browser/music player winows or even an internet connection needed while you work anymore) (TODO this feature will be available in the future)
 - keeps track of time worked (and time spent taking breaks) in a *local* log file so you can see your habbits
 
-Installation is easy, just download the installer (see releases or [click here](https://github.com/MeLikeyCode/pomodoro/releases/download/v1.0.0/install_pomodoro.exe)) and run it.
+Installation is easy, just download the installer (see [releases](https://github.com/MeLikeyCode/pomodoro/releases) or [click here](https://github.com/MeLikeyCode/pomodoro/releases/download/v1.0.0/install_pomodoro.exe)) and run it.
 
 Currently this app only works on windows, but if you are a linux/mac user and wanna use this, create an issue on the github repo and I'll make it happen.
 
