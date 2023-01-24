@@ -2,7 +2,7 @@
 A distraction-free pomodoro timer that helps you stay focused.
 - runs in the system tray
 - shows notifications when its time to work or take a break
-- plays study/work music in the background (no browser/music player winows or even an internet connection needed while you work anymore) (TODO this feature will be available in the future)
+- plays study/work music in the background (no browser/music player winows or even an internet connection needed while you work anymore) (TODO: this feature is not done yet)
 - keeps track of time worked (and time spent taking breaks) in a *local* log file so you can see your habbits
 
 Installation is easy, just download the installer (see [releases](https://github.com/MeLikeyCode/pomodoro/releases) or [click here](https://github.com/MeLikeyCode/pomodoro/releases/download/v1.0.0/install_pomodoro.exe)) and run it.
@@ -33,7 +33,7 @@ Furthermore, I like to review my habbits and such, so I made the app record the 
 
 # Credits
 - First, thanks a **whole bunch** to all the amazong people who contributed to the open source libraries, tools, IDEs, etc that were used to create this app
-    - namely, python, pyler, pystray, customtkinter, PIL, anaconda, pyinstaller, and NSIS
+    - namely, python, plyer, pystray, customtkinter, PIL, anaconda, pyinstaller, and NSIS
 - images
     - tomato icon created by **Freepik**, [hosted on Flaticom.com](https://www.flaticon.com/free-icons/tomato)
     - play icon created by **Bingge Liu**, [hosted on Flaticon.com](https://www.flaticon.com/free-icons/video)
