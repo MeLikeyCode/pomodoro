@@ -32,7 +32,7 @@ I also like to listen to music (study music) when I'm working, but having to ope
 Furthermore, I like to review my habbits and such, so I made the app record the amount of time you work/break, in a *local* file, no one except you will see it.
 
 # Credits
-- First, thanks a **whole bunch** to all the amazong people who contributed to the open source libraries, tools, IDEs, etc that were used to create this app
+- First, thanks a **whole bunch** to all the amazing people who contributed to the open source libraries, tools, IDEs, etc that were used to create this app
     - namely python, plyer, pystray, customtkinter, PIL, pygame, anaconda, pyinstaller, and NSIS
 - images
     - tomato icon created by **Freepik**, [hosted on Flaticom.com](https://www.flaticon.com/free-icons/tomato)
