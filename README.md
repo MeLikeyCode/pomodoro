@@ -2,7 +2,7 @@
 A distraction-free pomodoro timer that helps you stay focused.
 - runs in the system tray
 - shows notifications when its time to work or take a break
-- plays study/work music in the background (no browser/music player winows or even an internet connection needed while you work anymore) (TODO: this feature is not done yet)
+- plays study/work music in the background (no browser/music player winows or even an internet connection needed while you work anymore)
 - keeps track of time worked (and time spent taking breaks) in a *local* log file so you can see your habbits
 
 Installation is easy, just download the installer (see [releases](https://github.com/MeLikeyCode/pomodoro/releases) or [click here](https://github.com/MeLikeyCode/pomodoro/releases/download/v1.0.0/install_pomodoro.exe)) and run it.
@@ -27,16 +27,15 @@ The motivation for creating this app came about because I was looking for a pomo
 
 I was not able to find such a timer, so I created my own.
 
-I also like to listen to music (study music) when I'm working, but having to open up a browser just to play some music opens a whole can of distraction-worms. So I added the ability for my app to play study music in the background, without any distracting windows up! It ships with some music (generously provided by amazingly creative/artistic people) so you can enjoy study music even when you are disconnected.
+I also like to listen to music (study music) when I'm working, but having to open up a browser just to play some music opens a whole can of distraction-worms. So I added the ability for my app to play study music in the background, without any distracting windows up!
 
 Furthermore, I like to review my habbits and such, so I made the app record the amount of time you work/break, in a *local* file, no one except you will see it.
 
 # Credits
 - First, thanks a **whole bunch** to all the amazong people who contributed to the open source libraries, tools, IDEs, etc that were used to create this app
-    - namely, python, plyer, pystray, customtkinter, PIL, anaconda, pyinstaller, and NSIS
+    - namely python, plyer, pystray, customtkinter, PIL, pygame, anaconda, pyinstaller, and NSIS
 - images
     - tomato icon created by **Freepik**, [hosted on Flaticom.com](https://www.flaticon.com/free-icons/tomato)
     - play icon created by **Bingge Liu**, [hosted on Flaticon.com](https://www.flaticon.com/free-icons/video)
     - stop icon created by **moogun**, [hosted on Flaticon.com](https://www.flaticon.com/free-icons/stop)
     - hamburger icon created by **Lizel Arina**, [hosted on Flaticon.com](https://www.flaticon.com/free-icons/hamburger) (TODO if hamburger is not used, remove)
-- TODO add music credits
