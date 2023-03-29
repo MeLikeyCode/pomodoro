@@ -5,6 +5,7 @@ from PIL import Image, ImageTk
 from startscreen import StartScreen
 from timerscreen import TimerScreen
 from pomodoro import Pomodoro
+from musicplayer import MusicPlayer
 
 
 class PomodoroApp:
@@ -35,14 +36,23 @@ class PomodoroApp:
         self.root.bind("<<Quit>>", lambda e: self.root.destroy())
         self.root.bind("<<Show>>", self._on_show)
 
+        top_frame = ctk.CTkFrame(self.root)
+        top_frame.pack(fill=ctk.BOTH, expand=True)
+        bot_frame = ctk.CTkFrame(self.root)
+        bot_frame.pack(fill=ctk.BOTH, expand=True)
+
         # set up start screen
-        self._start_screen = StartScreen(self.root)
+        self._start_screen = StartScreen(top_frame)
         self._start_screen.pack(fill=ctk.BOTH, expand=True)
         self._start_screen.on_start = self.on_start_timer
 
         # set up timer screen
-        self._timer_screen = TimerScreen(self.root)
+        self._timer_screen = TimerScreen(top_frame)
         self._timer_screen.on_stop = self.on_stop_timer
+
+        # set up music player
+        self._music_player = MusicPlayer(bot_frame)
+        self._music_player.pack(fill=ctk.BOTH, expand=True)
 
     def start(self):
         self.root.mainloop()
