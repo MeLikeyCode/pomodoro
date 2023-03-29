@@ -4,6 +4,7 @@
 - **PIL** (used for image objects for tkinter)
 - **pystray** (allows placing interactable icons in the system tray)
 - **plyer** (allows poping up notifications)
+- **pygame** (used to play music)
 
 # Building an Installer
 Prereqs:
