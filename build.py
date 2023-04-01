@@ -41,8 +41,9 @@ if __name__ == "__main__":
         check=True,
     )
 
-    # copy images/config files
+    # copy images/sounds/config files
     shutil.copytree("images", "dist/pomodoro/images")
+    shutil.copytree("sounds", "dist/pomodoro/sounds")
     shutil.copy("settings.json", "dist/pomodoro")
 
     # create installer

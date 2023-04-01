@@ -1,5 +1,6 @@
 import customtkinter as ctk
 from PIL import ImageTk, Image
+from pygame import mixer
 
 from pomodoro import Pomodoro
 
@@ -10,11 +11,16 @@ class TimerScreen(ctk.CTkFrame):
     def __init__(self, master):
         super().__init__(master)
 
+        self._last_state = None
+        self._bell_sound = mixer.Sound("sounds/bell.wav")
+        self._bell_sound.set_volume(0.5)
+        self._ticking_sound = mixer.Sound("sounds/clock_tick.wav")
+        self._ticking_sound.set_volume(0.6)
         self._initialize_gui()
 
         self._pomodoro_timer = Pomodoro()
 
-        self._on_periodically()
+        self._update_gui()
 
     def _initialize_gui(self):
         stop_image = ImageTk.PhotoImage(Image.open("images/stop.png").resize((100, 100)))
@@ -52,19 +58,25 @@ class TimerScreen(ctk.CTkFrame):
         rounds_done_frame.pack()
 
     def _on_stop(self):
-        self._pomodoro_timer.stop()
+        self.stop_timer()
         self.on_stop()
 
     def start_timer(self):
+        self._last_state = self._pomodoro_timer.state
         self._pomodoro_timer.start()
+        self._ticking_sound.play(-1)
+        self._update_gui()
 
     def stop_timer(self):
+        self._last_state = self._pomodoro_timer.state
         self._pomodoro_timer.stop()
+        self._ticking_sound.stop()
+        self._update_gui()
 
     def on_stop(self):
         pass  # expecting client to assign this; gives client a chance to do something when stop button is clicked
 
-    def _on_periodically(self):
+    def _update_gui(self):
         # update GUI to reflect the underlying timer
         if self._pomodoro_timer.started:
             # update time remaining
@@ -76,6 +88,12 @@ class TimerScreen(ctk.CTkFrame):
             # update status
             self._activity_label.configure(text=self._pomodoro_timer.state)
 
+            # ensure proper sound is playing
+            if self._pomodoro_timer.state != self._last_state: # state changed
+                self._bell_sound.play() # bell sound signifies activity change
+                pass
+            self._last_state = self._pomodoro_timer.state
+
             # update works done
             works_done = self._pomodoro_timer.num_works_done
             self._works_done_value_label.configure(text=works_done)
@@ -84,7 +102,7 @@ class TimerScreen(ctk.CTkFrame):
             rounds_done = self._pomodoro_timer.num_rounds_done
             self._rounds_done_value_label.configure(text=rounds_done)
 
-        self.after(1000,self._on_periodically)  # call every second
+        self.after(1000,self._update_gui)  # call every second
 
     @property
     def work_length(self):

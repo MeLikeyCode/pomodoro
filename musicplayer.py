@@ -30,9 +30,6 @@ class MusicPlayer(tk.Frame):
 
         self._pack_widgets("play")
 
-        pygame.mixer.init()
-
-
     def _pack_widgets(self, play_or_pause):
         """Pack the widgets of the music player. `play_or_pause` determines whether the play or pause button is shown."""
 
@@ -59,7 +56,7 @@ class MusicPlayer(tk.Frame):
         if self.paused:
             pygame.mixer.music.unpause()
         else:
-            pygame.mixer.music.play()
+            pygame.mixer.music.play(-1)
 
         self._pack_widgets("pause")
 

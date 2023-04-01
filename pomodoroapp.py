@@ -1,6 +1,7 @@
 import customtkinter as ctk
 import pystray
 from PIL import Image, ImageTk
+import pygame
 
 from startscreen import StartScreen
 from timerscreen import TimerScreen
@@ -21,6 +22,15 @@ class PomodoroApp:
     """
 
     def __init__(self) -> None:
+        # Initialize pygame mixer.
+        # We use pygame's mixer module to play sounds.
+        # The module needs to be "initialized" before it can be used.
+        # Since multiple classes use the mixer, we initialize it here (when the application's "main" class is constructed) once, and all
+        # subsequent classes can use it.
+        # We also set the number of channels to 4, so that we can play up to 3 sounds at the same time (i.e. simultaneously).
+        pygame.mixer.init()
+        pygame.mixer.set_num_channels(3)
+
         self.root = ctk.CTk()
         ctk.set_appearance_mode("system")  # modes: system (default), light, dark
         ctk.set_default_color_theme("green")  # themes: blue (default), dark-blue, green

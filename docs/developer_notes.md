@@ -4,7 +4,7 @@
 - **PIL** (used for image objects for tkinter)
 - **pystray** (allows placing interactable icons in the system tray)
 - **plyer** (allows poping up notifications)
-- **pygame** (used to play music)
+- **pygame** (used to play audio)
 
 # Building an Installer
 Prereqs:
@@ -13,7 +13,7 @@ Prereqs:
 - python environment with all the dependent packages
 - NSIS (nullsoft scriptable install system)
 
-Run `build.py`. Pyinstaller output (the python interpretter, dependent .py files, .dlls, etc all packaged up in a folder) will be at `<project root>/dist/pomodoro`. The actual NSIS installer (this is the installer that needs to be distributed to end users) will be at `<project root>/pomodoro_installer.exe`.
+Run `build.py` with your python environment that meets all the required prereqs/dependencies. Pyinstaller output (the python interpretter, dependent .py files, .dlls, etc all packaged up in a folder) will be at `<project root>/dist/pomodoro`. The actual NSIS installer (this is the installer that needs to be distributed to end users) will be at `<project root>/pomodoro_installer.exe`.
 
 # Conventions
 - the Pomodoro class (pomodoro.py) uses *seconds* for work length, break length, and long break length, where as all the gui related classes (TimerScreen, StartScreen, etc) use *minutes*
