@@ -5,6 +5,7 @@
 - **pystray** (allows placing interactable icons in the system tray)
 - **plyer** (allows poping up notifications)
 - **pygame** (used to play audio)
+- **pyyaml** (used to serialize python dictionaries to YAML and vice versa)
 
 # Building an Installer
 Prereqs:

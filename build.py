@@ -44,7 +44,7 @@ if __name__ == "__main__":
     # copy images/sounds/config files
     shutil.copytree("images", "dist/pomodoro/images")
     shutil.copytree("sounds", "dist/pomodoro/sounds")
-    shutil.copy("settings.json", "dist/pomodoro")
+    shutil.copy("settings.yaml", "dist/pomodoro")
 
     # create installer
     subprocess.run('makensis build_installer.nsi', shell=True, check=True)

@@ -27,7 +27,7 @@ class PomodoroApp:
         # The module needs to be "initialized" before it can be used.
         # Since multiple classes use the mixer, we initialize it here (when the application's "main" class is constructed) once, and all
         # subsequent classes can use it.
-        # We also set the number of channels to 4, so that we can play up to 3 sounds at the same time (i.e. simultaneously).
+        # We also set the number of channels to 3, so that we can play up to 3 sounds at the same time (i.e. simultaneously).
         pygame.mixer.init()
         pygame.mixer.set_num_channels(3)
 

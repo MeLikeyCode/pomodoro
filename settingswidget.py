@@ -1,6 +1,6 @@
 import customtkinter as ctk
 import tkinter as tk
-import json
+import yaml
 
 
 class SettingsWidget(ctk.CTkFrame):
@@ -11,9 +11,9 @@ class SettingsWidget(ctk.CTkFrame):
         self._initialize_gui()
 
     def _initialize_gui(self):
-        # load initial param values from settings.json
-        with open("settings.json", "r") as f:
-            settings = json.load(f)
+        # load initial param values from settings.yaml
+        with open("settings.yaml", "r") as f:
+            settings = yaml.safe_load(f)
 
             self._work_length_var = tk.IntVar(value=settings["work_length"])
             self._break_length_var = tk.IntVar(value=settings["break_length"])
@@ -54,14 +54,14 @@ class SettingsWidget(ctk.CTkFrame):
         """Executed when any of the timer parameters (work length, break length, etc) are changed. Will
         write the new values to the settings file."""
 
-        with open("settings.json", "w") as f:
+        with open("settings.yaml", "w") as f:
             settings_dict = {
                 "work_length": self.work_length,
                 "break_length": self.break_length,
                 "long_break_length": self.long_break_length,
                 "num_works_before_long_break": self.num_works_before_long_break,
             }
-            f.write(json.dumps(settings_dict))
+            f.write(yaml.dump(settings_dict))
 
     @property
     def work_length(self):

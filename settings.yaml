@@ -1,0 +1,4 @@
+break_length: 5
+long_break_length: 20
+num_works_before_long_break: 4
+work_length: 25
