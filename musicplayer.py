@@ -9,9 +9,15 @@ import tempfile
 
 
 class LocalMusicPlayer:
-    def __init__(self, filepath):
+    """
+    Plays local music files (music files stores on the user's computer).
+
+    Uses pygame.mixer.music to play the music.
+    """
+
+    def __init__(self, music_filepath):
         pygame.mixer.music.stop()
-        pygame.mixer.music.load(filepath)
+        pygame.mixer.music.load(music_filepath)
 
     def play(self, loops):
         pygame.mixer.music.play(loops)
@@ -30,10 +36,16 @@ class LocalMusicPlayer:
 
 
 class YouTubeMusicPlayer:
+    """
+    Plays music from YouTube videos.
+
+    Uses YouTubeAudioPlayer to play the music.
+    """
+
     def __init__(self, url):
         self._url = url
         self._player = YouTubeAudioPlayer(url)
-        self._paused = False 
+        self._paused = False
         self._playing = False
         self._paused_at = 0  # in seconds
 
@@ -67,22 +79,33 @@ class YouTubeMusicPlayer:
 
 
 class MusicPlayer(tk.Frame):
+    """
+    A simple music player widget.
+
+    Allows the user to specify the path to a local music file or a YouTube video from which to play the music.
+    Allows pausing and seeking.
+    Stores recently played music files/URLs in a file and allows the user to select them from a dropdown.
+    """
+
     def __init__(self, master=None):
         super().__init__(master)
         self._paused = False
-        self._seek = 0 # 0 to 100
+        self._seek_pos = 0  # 0 to 100
         self._music_player = None
-        
+        self._RECENTLY_PLAYED_FILEPATH = os.path.join(
+            tempfile.gettempdir(), "pom_music_player.txt"
+        )
+
         self._recently_played = []
         # load from file if it exists
-        if os.path.isfile(os.path.join(tempfile.gettempdir(), "pom_music_player.txt")):
-            with open(os.path.join(tempfile.gettempdir(), "pom_music_player.txt"), "r") as f:
+        if os.path.isfile(self._RECENTLY_PLAYED_FILEPATH):
+            with open(self._RECENTLY_PLAYED_FILEPATH, "r") as f:
                 self._recently_played = f.read().split("\n")
 
         self._create_widgets()
 
     def _create_widgets(self):
-        # unicode buttons
+        # unicode symbols
         unicode_play = "\u25B6"
         unicode_pause = "\u23F8"
         unicode_open = "📂"
@@ -146,28 +169,28 @@ class MusicPlayer(tk.Frame):
             return
 
         if self._paused:
-            self._music_player.seek(self._seek)
+            self._music_player.seek(self._seek_pos) # user may have seeked since paused
             self._music_player.unpause()
         else:
             if self._music_player is not None:
                 self._music_player.stop()
-            if os.path.isfile(filepath): # local file
+            if os.path.isfile(filepath):  # local file
                 self._music_player = LocalMusicPlayer(filepath)
-            else: # assume it's a youtube url
+            else:  # assume it's a youtube url
                 self._music_player = YouTubeMusicPlayer(filepath)
-            
+
             self._music_player.play(-1)  # -1 means loop indefinitely
 
             # add to recently played
             if filepath not in self._recently_played:
                 self._recently_played.append(filepath)
-                # limit to 10 recently played items
+                # limit to 10 recently played items (keep most recent)
                 if len(self._recently_played) > 10:
-                    self._recently_played.pop(0)
+                    self._recently_played = self._recently_played[-10:]
                 self._filepath["values"] = self._recently_played
-                with open(os.path.join(tempfile.gettempdir(), "pom_music_player.txt"), "w") as f:
+                with open(self._RECENTLY_PLAYED_FILEPATH, "w") as f:
                     f.write("\n".join(self._recently_played))
-                
+
         self._pack_widgets("pause")
 
     def pause(self):
@@ -179,7 +202,7 @@ class MusicPlayer(tk.Frame):
         self._music_player.stop()
 
     def seek(self, value):
-        self._seek = value
+        self._seek_pos = value
         self._music_player.seek(value)
 
     def _load_local_track(self):
@@ -188,6 +211,7 @@ class MusicPlayer(tk.Frame):
         )
         if file_path:
             self._filepath_stringvar.set(file_path)
+
 
 # manually test the widget
 if __name__ == "__main__":
