@@ -6,6 +6,10 @@
 - **plyer** (allows poping up notifications)
 - **pygame** (used to play audio)
 - **pyyaml** (used to serialize python dictionaries to YAML and vice versa)
+- **av** (used to stream/decode audio frames)
+- **sounddevice** (used to play decoded audio frames)
+- **pytube** (used to get information (such as length, audio stream URL, etc) about youtube videos)
+- **numpy**
 
 # Building an Installer
 Prereqs:
