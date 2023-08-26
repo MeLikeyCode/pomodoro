@@ -6,6 +6,7 @@ import pygame
 import os
 from youtube_audio import YouTubeAudioPlayer
 import tempfile
+from customscale import CustomScale
 
 
 class LocalMusicPlayer:
@@ -18,6 +19,7 @@ class LocalMusicPlayer:
     def __init__(self, music_filepath):
         pygame.mixer.music.stop()
         pygame.mixer.music.load(music_filepath)
+        self._length = pygame.mixer.Sound(music_filepath).get_length()
 
     def play(self, loops):
         pygame.mixer.music.play(loops)
@@ -32,7 +34,13 @@ class LocalMusicPlayer:
         pygame.mixer.music.stop()
 
     def seek(self, value):
-        pygame.mixer.music.set_pos(value)
+        pygame.mixer.music.set_pos(value / 100 * self._length)
+
+    def get_pos(self):
+        return pygame.mixer.music.get_pos() / 1000
+    
+    def get_length(self):
+        return self._length
 
 
 class YouTubeMusicPlayer:
@@ -76,6 +84,12 @@ class YouTubeMusicPlayer:
         self._paused_at = seek_time_seconds
         if self._playing:
             self._player.play(seek_time_seconds)
+
+    def get_pos(self):
+        return self._player.position_seconds
+    
+    def get_length(self):
+        return self._player.duration
 
 
 class MusicPlayer(tk.Frame):
@@ -123,16 +137,26 @@ class MusicPlayer(tk.Frame):
         )
         self._filepath_stringvar.trace("w", self._on_filepath_changed)
 
-        self._seek_slider = ctk.CTkSlider(
-            self, from_=0, to=100, orient=tk.HORIZONTAL, command=self.seek
+        self._seek_slider = CustomScale(
+            self, from_=0, to=100, orient=tk.HORIZONTAL, get_pos=self._get_seek_pos, command=self._on_seek_slider_released
         )
         self._seek_slider.set(0)
+
 
         self._load_button = ctk.CTkButton(
             self, text=f"Browse {unicode_open}", command=self._load_local_track
         )
 
         self._pack_widgets("play")
+
+    def _get_seek_pos(self):
+        if self._music_player is None:
+            return 0
+        return float((self._music_player.get_pos() / self._music_player.get_length()) * self._seek_slider["to"])
+
+    def _on_seek_slider_released(self):
+        print(f"onsliderrelease() seeked to {self._seek_slider.get()}")
+        self.seek(self._seek_slider.get())
 
     def _pack_widgets(self, play_or_pause):
         # remove all widgets
@@ -169,9 +193,11 @@ class MusicPlayer(tk.Frame):
             return
 
         if self._paused:
+            # unpause
             self._music_player.seek(self._seek_pos) # user may have seeked since paused
             self._music_player.unpause()
         else:
+            # fresh play
             if self._music_player is not None:
                 self._music_player.stop()
             if os.path.isfile(filepath):  # local file
@@ -199,11 +225,14 @@ class MusicPlayer(tk.Frame):
         self._pack_widgets("play")
 
     def stop(self):
+        # TODO there is no stop button I think so maybe remove this function?
         self._music_player.stop()
 
     def seek(self, value):
         self._seek_pos = value
         self._music_player.seek(value)
+        print(f"seek() value is {value}")
+        print(f"seek() seeked to {self._music_player.get_pos()}")
 
     def _load_local_track(self):
         file_path = filedialog.askopenfilename(

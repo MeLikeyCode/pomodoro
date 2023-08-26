@@ -164,7 +164,7 @@ class YouTubeAudioPlayer:
         chunk = []  # bunch of audio frames
         for packet in self._container.demux(self._audio_stream):
             for frame in packet.decode():
-                self.position_seconds = frame.pts * self._audio_stream.time_base
+                self.position_seconds = float(frame.pts * self._audio_stream.time_base)
 
                 if self._exit_worker:
                     return
