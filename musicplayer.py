@@ -149,6 +149,10 @@ class MusicPlayer(tk.Frame):
 
         self._pack_widgets("play")
 
+        # default filepath to most recently played song
+        if len(self._recently_played) > 0:
+            self._filepath_stringvar.set(self._recently_played[0])
+
     def _on_seek_slider_released(self):
         self.seek(self._seek_slider.get())
 
