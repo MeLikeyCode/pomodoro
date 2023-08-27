@@ -138,7 +138,7 @@ class MusicPlayer(tk.Frame):
         self._filepath_stringvar.trace("w", self._on_filepath_changed)
 
         self._seek_slider = CustomScale(
-            self, from_=0, to=100, orient=tk.HORIZONTAL, get_pos=self._get_seek_pos, command=self._on_seek_slider_released
+            self, from_=0, to=100, orient=tk.HORIZONTAL, command=self._on_seek_slider_released
         )
         self._seek_slider.set(0)
 
@@ -149,13 +149,7 @@ class MusicPlayer(tk.Frame):
 
         self._pack_widgets("play")
 
-    def _get_seek_pos(self):
-        if self._music_player is None:
-            return 0
-        return float((self._music_player.get_pos() / self._music_player.get_length()) * self._seek_slider["to"])
-
     def _on_seek_slider_released(self):
-        print(f"onsliderrelease() seeked to {self._seek_slider.get()}")
         self.seek(self._seek_slider.get())
 
     def _pack_widgets(self, play_or_pause):
@@ -183,6 +177,7 @@ class MusicPlayer(tk.Frame):
         self._paused = False
         self._seek_slider.set(0)
         self._pack_widgets("play")
+        self._seek_slider.move_slider = False
         if self._music_player is not None:
             self._music_player.stop()
 
@@ -194,6 +189,8 @@ class MusicPlayer(tk.Frame):
 
         if self._paused:
             # unpause
+            self._paused = False
+            self._seek_slider.move_slider = True
             self._music_player.seek(self._seek_pos) # user may have seeked since paused
             self._music_player.unpause()
         else:
@@ -217,10 +214,18 @@ class MusicPlayer(tk.Frame):
                 with open(self._RECENTLY_PLAYED_FILEPATH, "w") as f:
                     f.write("\n".join(self._recently_played))
 
+            # determine rate at which to update seek slider
+            duration = self._music_player.get_length()
+            rate = 1/duration # if duration is 1 second, move slider 100% (1) per second, if duration is 2 seconds, move slider 50% (0.5) per second, etc.
+            self._seek_slider.rate = rate
+            self._seek_slider.move_slider = True
+
         self._pack_widgets("pause")
 
     def pause(self):
         self._paused = True
+        self._seek_slider.move_slider = False
+        self._seek_pos = self._seek_slider.get()
         self._music_player.pause()
         self._pack_widgets("play")
 
@@ -231,8 +236,6 @@ class MusicPlayer(tk.Frame):
     def seek(self, value):
         self._seek_pos = value
         self._music_player.seek(value)
-        print(f"seek() value is {value}")
-        print(f"seek() seeked to {self._music_player.get_pos()}")
 
     def _load_local_track(self):
         file_path = filedialog.askopenfilename(
