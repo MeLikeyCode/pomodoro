@@ -34,7 +34,7 @@ class LocalMusicPlayer:
         pygame.mixer.music.stop()
 
     def seek(self, value):
-        pygame.mixer.music.set_pos(value / 100 * self._length)
+        pygame.mixer.music.set_pos(value * self._length)
 
     def get_pos(self):
         return pygame.mixer.music.get_pos() / 1000
@@ -80,7 +80,7 @@ class YouTubeMusicPlayer:
 
     def seek(self, value):
         duration = self._player.duration
-        seek_time_seconds = (value / 100) * duration
+        seek_time_seconds = value * duration
         self._paused_at = seek_time_seconds
         if self._playing:
             self._player.play(seek_time_seconds)
@@ -104,7 +104,7 @@ class MusicPlayer(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
         self._paused = False
-        self._seek_pos = 0  # 0 to 100
+        self._seek_pos = 0  # 0 to 1, specifying location in song
         self._music_player = None
         self._RECENTLY_PLAYED_FILEPATH = os.path.join(
             tempfile.gettempdir(), "pom_music_player.txt"
@@ -138,7 +138,7 @@ class MusicPlayer(tk.Frame):
         self._filepath_stringvar.trace("w", self._on_filepath_changed)
 
         self._seek_slider = CustomScale(
-            self, from_=0, to=100, orient=tk.HORIZONTAL, command=self._on_seek_slider_released
+            self, from_=0, to=1, orient=tk.HORIZONTAL, command=lambda : self.seek(self._seek_slider.get())
         )
         self._seek_slider.set(0)
 
@@ -228,10 +228,6 @@ class MusicPlayer(tk.Frame):
         self._seek_pos = self._seek_slider.get()
         self._music_player.pause()
         self._pack_widgets("play")
-
-    def stop(self):
-        # TODO there is no stop button I think so maybe remove this function?
-        self._music_player.stop()
 
     def seek(self, value):
         self._seek_pos = value
