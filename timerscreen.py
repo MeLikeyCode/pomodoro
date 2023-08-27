@@ -25,13 +25,13 @@ class TimerScreen(ctk.CTkFrame):
     def _initialize_gui(self):
         stop_image = ImageTk.PhotoImage(Image.open("images/stop.png").resize((100, 100)))
 
-        title_label = ctk.CTkLabel(self, text="pomodoro", text_font=("Helvetica", 25))
+        title_label = ctk.CTkLabel(self, text="pomodoro", font=("Helvetica", 25))
 
         stop_button = ctk.CTkButton(
             self, text="stop", image=stop_image, compound=ctk.TOP, command=self._on_stop, fg_color="#D2686E", hover_color="#680C07"
         )
-        self._activity_label = ctk.CTkLabel(self, text_font=("Helvetica", 25),text="work")
-        self._time_remaining_label = ctk.CTkLabel(self, text_font=("Helvetica", 40), text="00:00")
+        self._activity_label = ctk.CTkLabel(self, font=("Helvetica", 25),text="work")
+        self._time_remaining_label = ctk.CTkLabel(self, font=("Helvetica", 40), text="00:00")
 
 
         title_label.pack(padx=10, pady=10, fill=ctk.X)

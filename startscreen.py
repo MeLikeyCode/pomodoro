@@ -14,7 +14,7 @@ class StartScreen(ctk.CTkFrame):
     def _initialize_gui(self):
         play_image = ImageTk.PhotoImage(Image.open("images/play.png").resize((100, 100)))
 
-        title_label = ctk.CTkLabel(self, text="pomodoro", text_font=("Helvetica", 25))
+        title_label = ctk.CTkLabel(self, text="pomodoro", font=("Helvetica", 25))
         start_button = ctk.CTkButton(
             self,
             text="start",
