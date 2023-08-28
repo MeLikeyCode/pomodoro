@@ -138,7 +138,7 @@ class MusicPlayer(tk.Frame):
         self._filepath_stringvar.trace("w", self._on_filepath_changed)
 
         self._seek_slider = CustomScale(
-            self, from_=0, to=1, orient=tk.HORIZONTAL, command=lambda : self.seek(self._seek_slider.get())
+            self, from_=0, to=1, orient=tk.HORIZONTAL, command=lambda : self.seek(self._seek_slider.get()), on_end=self._on_seek_slider_reached_end
         )
         self._seek_slider.set(0)
 
@@ -152,6 +152,14 @@ class MusicPlayer(tk.Frame):
         # default filepath to most recently played song
         if len(self._recently_played) > 0:
             self._filepath_stringvar.set(self._recently_played[0])
+
+    def _on_seek_slider_reached_end(self):
+        # play from beginning
+        self._seek_slider.set(0)
+        self._seek_pos = 0
+        self._music_player.seek(0)
+        self._music_player.play(-1)
+        self._seek_slider.move_slider = True
 
     def _on_seek_slider_released(self):
         self.seek(self._seek_slider.get())
