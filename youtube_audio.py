@@ -7,7 +7,6 @@ import queue  # thread-safe queue, get() blocks when queue is empty, put() block
 import numpy as np
 import threading
 
-
 class StreamingAudioPlayer:
     """
     Keeps playing audio (in the background, in another thread) that you feed it.
@@ -163,16 +162,19 @@ class YouTubeAudioPlayer:
 
         chunk = []  # bunch of audio frames
         for packet in self._container.demux(self._audio_stream):
-            for frame in packet.decode():
-                self.position_seconds = float(frame.pts * self._audio_stream.time_base)
+            try:
+                for frame in packet.decode():
+                    self.position_seconds = float(frame.pts * self._audio_stream.time_base)
 
-                if self._exit_worker:
-                    return
-                audio_data = frame.to_ndarray()
-                audio_data = audio_data.transpose()
-                chunk.append(audio_data)
+                    if self._exit_worker:
+                        return
+                    audio_data = frame.to_ndarray()
+                    audio_data = audio_data.transpose()
+                    chunk.append(audio_data)
 
-                if len(chunk) == self._CHUNK_SIZE:
-                    audio_data_combined = np.concatenate(chunk)
-                    self._player.add_audio(audio_data_combined)
-                    chunk.clear()
+                    if len(chunk) == self._CHUNK_SIZE:
+                        audio_data_combined = np.concatenate(chunk)
+                        self._player.add_audio(audio_data_combined)
+                        chunk.clear()
+            except av.InvalidDataError:
+                continue
